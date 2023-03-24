@@ -33,7 +33,7 @@
                 {
                     if(argument.Length == 2)
                     {
-                        using (StreamReader sr = new StreamReader(argument[1]))
+                        using (StreamReader sr = new StreamReader(argument[1])) // FIXME: System.IO.FileNotFoundException, kolla sökväg
                         {
                             dictionary = new List<SweEngGloss>(); // Empty it!
                             string line = sr.ReadLine();
@@ -73,7 +73,7 @@
                     {
                         dictionary.Add(new SweEngGloss(argument[1], argument[2]));
                     }
-                    else if(argument.Length == 1)
+                    else if(argument.Length == 1) // FIXME: System.NullReferenceException när inge lista laddats
                     {
                         Console.WriteLine("Write word in Swedish: ");
                         string s = Console.ReadLine();
@@ -81,13 +81,16 @@
                         string e = Console.ReadLine();
                         dictionary.Add(new SweEngGloss(s, e));
                     }
+
+                    // FIXME: Meddela om och varför inget lades till vid t ex endast 1 argument
                 }
                 else if (command == "delete")
                 {
                     if (argument.Length == 3)
                     {
                         int index = -1;
-                        for (int i = 0; i < dictionary.Count; i++) {
+                        for (int i = 0; i < dictionary.Count; i++)
+                        { //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument
                             SweEngGloss gloss = dictionary[i];
                             if (gloss.word_swe == argument[1] && gloss.word_eng == argument[2])
                                 index = i;
@@ -109,6 +112,7 @@
                         }
                         dictionary.RemoveAt(index);
                     }
+                    // FIXME: meddela varför inget tas bort vid t ex bara ett argument
                 }
                 else if (command == "translate")
                 {
@@ -140,7 +144,7 @@
                     Console.WriteLine($"Unknown command: '{command}'");
                 }
             }
-            while (true);
+            while (true); // FIXME: tills command = "quit"
         }
     }
 }
