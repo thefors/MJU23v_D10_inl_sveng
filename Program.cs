@@ -35,30 +35,11 @@
                     dictionary = new List<SweEngGloss>(); // Empty it!
                     if (argument.Length == 2)
                     {
-                        
-                        using (StreamReader sr = new StreamReader(defaultRoot + argument[1])) // FIXME: System.IO.FileNotFoundException, kolla sökväg
-                        {
-                            string line = sr.ReadLine();
-                            while (line != null)
-                            {
-                                SweEngGloss gloss = new SweEngGloss(line);
-                                dictionary.Add(gloss);
-                                line = sr.ReadLine();
-                            }
-                        }
+                        LoadFile(defaultRoot, argument[1]);
                     }
                     else if(argument.Length == 1)
                     {
-                        using (StreamReader sr = new StreamReader(defaultRoot + defaultFile))
-                        {
-                            string line = sr.ReadLine();
-                            while (line != null)
-                            {
-                                SweEngGloss gloss = new SweEngGloss(line);
-                                dictionary.Add(gloss);
-                                line = sr.ReadLine();
-                            }
-                        }
+                        LoadFile(defaultRoot, defaultFile);
                     }
                 }
                 else if (command == "list")
@@ -146,6 +127,20 @@
                 }
             }
             while (true); // FIXME: tills command = "quit"
+        }
+
+        private static void LoadFile(string defaultRoot, string argument)
+        {
+            using (StreamReader sr = new StreamReader(defaultRoot + argument)) // FIXME: System.IO.FileNotFoundException, kolla sökväg (try/catch med meddelande)
+            {
+                string line = sr.ReadLine();
+                while (line != null)
+                {
+                    SweEngGloss gloss = new SweEngGloss(line);
+                    dictionary.Add(gloss);
+                    line = sr.ReadLine();
+                }
+            }
         }
     }
 }
