@@ -18,7 +18,8 @@
         }
         static void Main(string[] args)
         {
-            string defaultFile = "..\\..\\..\\dict\\sweeng.lis";
+            string defaultFile = "sweeng.lis"; // default filename without path
+            string defaultRoot = "..\\..\\..\\dict\\"; // default file root to help refactored LoadFile method
             Console.WriteLine("Welcome to the dictionary app!");
             do
             {
@@ -31,11 +32,12 @@
                 }
                 else if (command == "load")
                 {
-                    if(argument.Length == 2)
+                    dictionary = new List<SweEngGloss>(); // Empty it!
+                    if (argument.Length == 2)
                     {
-                        using (StreamReader sr = new StreamReader(argument[1])) // FIXME: System.IO.FileNotFoundException, kolla sökväg
+                        
+                        using (StreamReader sr = new StreamReader(defaultRoot + argument[1])) // FIXME: System.IO.FileNotFoundException, kolla sökväg
                         {
-                            dictionary = new List<SweEngGloss>(); // Empty it!
                             string line = sr.ReadLine();
                             while (line != null)
                             {
@@ -47,9 +49,8 @@
                     }
                     else if(argument.Length == 1)
                     {
-                        using (StreamReader sr = new StreamReader(defaultFile))
+                        using (StreamReader sr = new StreamReader(defaultRoot + defaultFile))
                         {
-                            dictionary = new List<SweEngGloss>(); // Empty it!
                             string line = sr.ReadLine();
                             while (line != null)
                             {
