@@ -52,45 +52,13 @@
                 }
                 else if (command == "delete")
                 {
-                    if (argument.Length == 3)
-                    {
-                        int index = -1;
-                        for (int i = 0; i < dictionary.Count; i++)
-                        { //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument
-                            SweEngGloss gloss = dictionary[i];
-                            if (gloss.word_swe == argument[1] && gloss.word_eng == argument[2])
-                                index = i;
-                        }
-                        dictionary.RemoveAt(index);
-                    }
-                    else if (argument.Length == 1)
-                    {
-                        Console.WriteLine("Write word in Swedish: ");
-                        string swedish = Console.ReadLine();
-                        Console.Write("Write word in English: ");
-                        string english = Console.ReadLine();
-                        int index = -1;
-                        for (int i = 0; i < dictionary.Count; i++)
-                        {
-                            SweEngGloss gloss = dictionary[i];
-                            if (gloss.word_swe == swedish && gloss.word_eng == english)
-                                index = i;
-                        }
-                        dictionary.RemoveAt(index);
-                    }
-                    // FIXME: meddela varför inget tas bort vid t ex bara ett argument
+                    DeleteEntry(argument);
                 }
                 else if (command == "translate")
                 {
                     if (argument.Length == 2)
                     {
-                        foreach(SweEngGloss gloss in dictionary)
-                        {
-                            if (gloss.word_swe == argument[1])
-                                Console.WriteLine($"English for {gloss.word_swe} is {gloss.word_eng}");
-                            if (gloss.word_eng == argument[1])
-                                Console.WriteLine($"Swedish for {gloss.word_eng} is {gloss.word_swe}");
-                        }
+                        LookUp(argument[1]);
                     }
                     else if (argument.Length == 1)
                     {
@@ -111,6 +79,48 @@
                 }
             }
             while (true); // FIXME: tills command = "quit"
+        }
+
+        private static void LookUp(string argument)
+        {
+            foreach (SweEngGloss gloss in dictionary)
+            {
+                if (gloss.word_swe == argument)
+                    Console.WriteLine($"English for {gloss.word_swe} is {gloss.word_eng}");
+                if (gloss.word_eng == argument)
+                    Console.WriteLine($"Swedish for {gloss.word_eng} is {gloss.word_swe}");
+            }
+        }
+
+        private static void DeleteEntry(string[] argument)
+        {
+            if (argument.Length == 3)
+            {
+                int index = -1;
+                for (int i = 0; i < dictionary.Count; i++)
+                { //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument
+                    SweEngGloss gloss = dictionary[i];
+                    if (gloss.word_swe == argument[1] && gloss.word_eng == argument[2])
+                        index = i;
+                }
+                dictionary.RemoveAt(index);
+            }
+            else if (argument.Length == 1)
+            {
+                Console.WriteLine("Write word in Swedish: ");
+                string swedish = Console.ReadLine();
+                Console.Write("Write word in English: ");
+                string english = Console.ReadLine();
+                int index = -1;
+                for (int i = 0; i < dictionary.Count; i++)
+                {
+                    SweEngGloss gloss = dictionary[i];
+                    if (gloss.word_swe == swedish && gloss.word_eng == english)
+                        index = i;
+                }
+                dictionary.RemoveAt(index);
+            }
+            // FIXME: meddela varför inget tas bort vid t ex bara ett argument
         }
 
         private static void NewEntry(string[] argument)
