@@ -48,20 +48,7 @@
                 }
                 else if (command == "new")
                 {
-                    if (argument.Length == 3)
-                    {
-                        dictionary.Add(new SweEngGloss(argument[1], argument[2]));
-                    }
-                    else if(argument.Length == 1) // FIXME: System.NullReferenceException när inge lista laddats
-                    {
-                        Console.WriteLine("Write word in Swedish: ");
-                        string swedish = Console.ReadLine();
-                        Console.Write("Write word in English: ");
-                        string english = Console.ReadLine();
-                        dictionary.Add(new SweEngGloss(swedish, english));
-                    }
-
-                    // FIXME: Meddela om och varför inget lades till vid t ex endast 1 argument
+                    NewEntry(argument);
                 }
                 else if (command == "delete")
                 {
@@ -124,6 +111,24 @@
                 }
             }
             while (true); // FIXME: tills command = "quit"
+        }
+
+        private static void NewEntry(string[] argument)
+        {
+            if (argument.Length == 3)
+            {
+                dictionary.Add(new SweEngGloss(argument[1], argument[2]));
+            }
+            else if (argument.Length == 1) // FIXME: System.NullReferenceException när inge lista laddats
+            {
+                Console.WriteLine("Write word in Swedish: ");
+                string swedish = Console.ReadLine();
+                Console.Write("Write word in English: ");
+                string english = Console.ReadLine();
+                dictionary.Add(new SweEngGloss(swedish, english));
+            }
+
+            // FIXME: Meddela om och varför inget lades till vid t ex endast 1 argument
         }
 
         private static void ListDictionary()
