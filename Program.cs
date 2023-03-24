@@ -44,10 +44,7 @@
                 }
                 else if (command == "list")
                 {
-                    foreach(SweEngGloss gloss in dictionary)
-                    {
-                        Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}");
-                    }
+                    ListDictionary();
                 }
                 else if (command == "new")
                 {
@@ -127,6 +124,14 @@
                 }
             }
             while (true); // FIXME: tills command = "quit"
+        }
+
+        private static void ListDictionary()
+        {
+            foreach (SweEngGloss gloss in dictionary)
+            {
+                Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}"); // FIXME: System.NullReferenceException när inge lista laddats
+            }
         }
 
         private static void LoadFile(string defaultRoot, string argument)
