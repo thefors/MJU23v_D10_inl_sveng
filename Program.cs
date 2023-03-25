@@ -91,14 +91,7 @@
         {
             if (argument.Length == 3)
             {
-                int index = -1;
-                for (int i = 0; i < dictionary.Count; i++)
-                { //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument
-                    SweEngGloss gloss = dictionary[i];
-                    if (gloss.word_swe == argument[1] && gloss.word_eng == argument[2])
-                        index = i;
-                }
-                dictionary.RemoveAt(index);
+                FindAndRemove(argument[1], argument[2]);
             }
             else if (argument.Length == 1)
             {
@@ -106,16 +99,23 @@
                 string swedish = Console.ReadLine();
                 Console.Write("Write word in English: ");
                 string english = Console.ReadLine();
-                int index = -1;
-                for (int i = 0; i < dictionary.Count; i++)
-                {
-                    SweEngGloss gloss = dictionary[i];
-                    if (gloss.word_swe == swedish && gloss.word_eng == english)
-                        index = i;
-                }
-                dictionary.RemoveAt(index);
+                FindAndRemove(swedish, english);
             }
             // FIXME: meddela varför inget tas bort vid t ex bara ett argument
+        }
+
+        private static void FindAndRemove(string swedish, string english)
+        {
+            //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument
+
+            int index = -1;
+            for (int i = 0; i < dictionary.Count; i++)
+            {
+                SweEngGloss gloss = dictionary[i];
+                if (gloss.word_swe == swedish && gloss.word_eng == english)
+                    index = i;
+            }
+            dictionary.RemoveAt(index);
         }
 
         private static void NewEntry(string[] argument)
