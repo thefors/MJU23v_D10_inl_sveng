@@ -137,9 +137,15 @@
 
         private static void ListDictionary()
         {
-            foreach (SweEngGloss gloss in dictionary)
+            try
             {
-                Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}"); // FIXME: System.NullReferenceException när inge lista laddats
+                foreach (SweEngGloss gloss in dictionary)
+                {
+                    Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}"); // FIXME: System.NullReferenceException när inge lista laddats - FIXAT
+                }
+            } catch (System.NullReferenceException)
+            {
+                Console.WriteLine("No wordlist in memory. Might not have been loaded.");
             }
         }
 
@@ -156,7 +162,7 @@
                         line = sr.ReadLine();
                     }
                 }
-             }catch(System.IO.FileNotFoundException e) {
+             }catch(System.IO.FileNotFoundException) {
                 Console.WriteLine("No such file or path.");
             }
         }
