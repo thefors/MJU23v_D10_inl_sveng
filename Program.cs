@@ -63,14 +63,8 @@
                     else if (argument.Length == 1)
                     {
                         Console.WriteLine("Write word to be translated: ");
-                        string swedish = Console.ReadLine();
-                        foreach (SweEngGloss gloss in dictionary)
-                        {
-                            if (gloss.word_swe == swedish)
-                                Console.WriteLine($"English for {gloss.word_swe} is {gloss.word_eng}");
-                            if (gloss.word_eng == swedish)
-                                Console.WriteLine($"Swedish for {gloss.word_eng} is {gloss.word_swe}");
-                        }
+                        string word = Console.ReadLine();
+                        LookUp(word);
                     }
                 }
                 else
@@ -151,15 +145,19 @@
 
         private static void LoadFile(string defaultRoot, string argument)
         {
-            using (StreamReader sr = new StreamReader(defaultRoot + argument)) // FIXME: System.IO.FileNotFoundException, kolla sökväg (try/catch med meddelande)
-            {
-                string line = sr.ReadLine();
-                while (line != null)
+            try {
+                using (StreamReader sr = new StreamReader(defaultRoot + argument)) // FIXME: System.IO.FileNotFoundException, kolla sökväg (try/catch med meddelande) - FIXAT
                 {
-                    SweEngGloss gloss = new SweEngGloss(line);
-                    dictionary.Add(gloss);
-                    line = sr.ReadLine();
+                    string line = sr.ReadLine();
+                    while (line != null)
+                    {
+                        SweEngGloss gloss = new SweEngGloss(line);
+                        dictionary.Add(gloss);
+                        line = sr.ReadLine();
+                    }
                 }
+             }catch(System.IO.FileNotFoundException e) {
+                Console.WriteLine("No such file or path.");
             }
         }
     }
