@@ -21,6 +21,7 @@
             string defaultFile = "sweeng.lis"; // default filename without path
             string defaultRoot = "..\\..\\..\\dict\\"; // default file root to help refactored LoadFile method
             Console.WriteLine("Welcome to the dictionary app!");
+            Console.WriteLine("Type help for list of commands.");
             string command;
             do
             {
@@ -67,6 +68,9 @@
                         string word = Console.ReadLine();
                         LookUp(word);
                     }
+                } else if(command == "help")
+                {
+                    HelpDisplay();
                 }
                 else
                 {
@@ -182,6 +186,18 @@
              }catch(System.IO.FileNotFoundException) {
                 Console.WriteLine("No such file or path.");
             }
+        }
+        private static void HelpDisplay()
+        {
+            Console.WriteLine("load");
+            Console.WriteLine("load filename.lis");
+            Console.WriteLine("list");
+            Console.WriteLine("translate");
+            Console.WriteLine("translate english_word");
+            Console.WriteLine("translate swedish_word");
+            Console.WriteLine("delete");
+            Console.WriteLine("delete swedish_word english_word");
+            Console.WriteLine("quit");
         }
     }
 }
