@@ -129,18 +129,25 @@
 
         private static void NewEntry(string[] argument)
         {
-            if (argument.Length == 3)
+            // FIXME: System.NullReferenceException när inge lista laddats - FIXAT
+            try
             {
-                dictionary.Add(new SweEngGloss(argument[1], argument[2]));
+                if (argument.Length == 3)
+                {
+                    dictionary.Add(new SweEngGloss(argument[1], argument[2]));
+                }
+                else if (argument.Length == 1)
+                {
+                    Console.WriteLine("Write word in Swedish: ");
+                    string swedish = Console.ReadLine();
+                    Console.Write("Write word in English: ");
+                    string english = Console.ReadLine();
+                    dictionary.Add(new SweEngGloss(swedish, english));
+                }
+            } catch (System.NullReferenceException) {
+                Console.WriteLine("No dictionary in memory. Maybe it has not been loaded. This entry has not been added.");
             }
-            else if (argument.Length == 1) // FIXME: System.NullReferenceException när inge lista laddats
-            {
-                Console.WriteLine("Write word in Swedish: ");
-                string swedish = Console.ReadLine();
-                Console.Write("Write word in English: ");
-                string english = Console.ReadLine();
-                dictionary.Add(new SweEngGloss(swedish, english));
-            }
+           
 
             // FIXME: Meddela om och varför inget lades till vid t ex endast 1 argument
         }
