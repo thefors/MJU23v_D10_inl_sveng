@@ -106,7 +106,8 @@
 
         private static void FindAndRemove(string swedish, string english)
         {
-            //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument - FIXAT!
+            // FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument - FIXAT!
+            // FIXME: ny!  System.NullReferenceException när ingen lista laddats - FIXAT
             try
             {
                 int index = -1;
@@ -119,6 +120,9 @@
                 dictionary.RemoveAt(index);
             } catch (System.ArgumentOutOfRangeException) {
                 Console.WriteLine("One ore more entries don't match with the words in the dictionary. Nothing has been deleted.");
+            } catch (System.NullReferenceException)
+            {
+                Console.WriteLine("No dictionary in memory. Maybe it has not been loaded.");
             }
             
         }
