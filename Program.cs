@@ -21,11 +21,12 @@
             string defaultFile = "sweeng.lis"; // default filename without path
             string defaultRoot = "..\\..\\..\\dict\\"; // default file root to help refactored LoadFile method
             Console.WriteLine("Welcome to the dictionary app!");
+            string command;
             do
             {
                 Console.Write("> ");
                 string[] argument = Console.ReadLine().Split();
-                string command = argument[0];
+                command = argument[0];
                 if (command == "quit")
                 {
                     Console.WriteLine("Goodbye!");
@@ -72,7 +73,7 @@
                     Console.WriteLine($"Unknown command: '{command}'");
                 }
             }
-            while (true); // FIXME: tills command = "quit"
+            while (command != "quit"); // FIXME: tills command = "quit" - FIXAT
         }
 
         private static void LookUp(string argument)
