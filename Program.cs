@@ -106,16 +106,21 @@
 
         private static void FindAndRemove(string swedish, string english)
         {
-            //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument
-
-            int index = -1;
-            for (int i = 0; i < dictionary.Count; i++)
+            //FIXME: System.ArgumentOutOfRangeException vid ett felstavat argument - FIXAT!
+            try
             {
-                SweEngGloss gloss = dictionary[i];
-                if (gloss.word_swe == swedish && gloss.word_eng == english)
-                    index = i;
+                int index = -1;
+                for (int i = 0; i < dictionary.Count; i++)
+                {
+                    SweEngGloss gloss = dictionary[i];
+                    if (gloss.word_swe == swedish && gloss.word_eng == english)
+                        index = i;
+                }
+                dictionary.RemoveAt(index);
+            } catch (System.ArgumentOutOfRangeException) {
+                Console.WriteLine("One ore more entries don't match with the words in the dictionary. Nothing has been deleted.");
             }
-            dictionary.RemoveAt(index);
+            
         }
 
         private static void NewEntry(string[] argument)
